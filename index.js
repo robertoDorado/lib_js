@@ -25,7 +25,7 @@ class HelpersJs {
     visible = (element) => this.selectElement(element).style.display = 'block'
     invisible = (element) => this.selectElement(element).style.display = 'none'
 
-    requestXHR(method, data = '', format = 'json') {
+    requestXHR(method, url=this.url, data = '', format = 'json') {
 
         let xhr = new XMLHttpRequest()
         let form_data = new FormData()
@@ -48,13 +48,13 @@ class HelpersJs {
 
             form_data.append('data', data)
 
-            xhr.open('POST', this.url)
+            xhr.open('POST', url)
             xhr.send(form_data)
         }
 
         if(method == 'GET'){
 
-            xhr.open('GET', this.url)
+            xhr.open('GET', url)
             xhr.send()
         }
 

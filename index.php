@@ -1,3 +1,4 @@
+<?php $remove_cache = "?" . date("YmdHis"); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,13 +8,21 @@
     <title>Document</title>
 </head>
 <body>
-    <button class="click_element">click</button>
-    <button class="visible_element">click visible</button>
+    <button class="click_element" id="click-element" data="data-target">click</button>
+    <div class="background"></div>
     
 </body>
 </html>
 
-<script src="./index.js"></script>
+<style>
+    .background{
+        background-color:red;
+        width:200px;
+        height:200px;
+    }
+</style>
+
+<script src="./index.js<?= $remove_cache ?>"></script>
 <script>
     // fazer requisições get e post
     let xhr = helper.requestXHR('GET', './receber.php', {idade:4444, velocidade:'13kmh'})
@@ -22,13 +31,12 @@
             console.log(xhr.response)
     })
 
-    //invilible element
+    //invisible element
     helper.listener('click', '.click_element', () => {
         helper.invisible('.click_element')
     })
 
-    //visible element
-    helper.listener('click', '.visible_element', () => {
-        helper.visible('.click_element')
-    })
+    let id_element = helper.getById("click-element")
+    let attribute_element = helper.getAttr("click-element", "data")
+    console.log(attribute_element)
 </script>

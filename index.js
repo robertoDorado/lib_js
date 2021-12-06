@@ -6,6 +6,9 @@ class HelpersJs {
 
     selectElement = (elem) => document.querySelector(elem)
     selectElements = (elems) => document.querySelectorAll(elems)
+    getById = (idElement) => document.getElementById(idElement)
+
+    toggleElement = (element) =>
 
     listener = (listen, element, functionName) => {
         //Se o listener for submit ele previne a ação padrão
@@ -24,6 +27,8 @@ class HelpersJs {
 
     visible = (element) => this.selectElement(element).style.display = 'block'
     invisible = (element) => this.selectElement(element).style.display = 'none'
+
+    getAttr = (elementId, attribute) => this.getById(elementId).getAttribute(attribute)
 
     requestXHR(method, url=this.url, data = '', format = 'json') {
 

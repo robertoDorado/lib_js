@@ -1,6 +1,6 @@
 class HelpersJs {
 
-    constructor(url='') {
+    constructor(url = '') {
         this.url = url
     }
 
@@ -9,7 +9,7 @@ class HelpersJs {
 
     listener = (listen, element, functionName) => {
         //Se o listener for submit ele previne a ação padrão
-        if(listen == 'submit'){
+        if (listen == 'submit') {
             this.selectElement(element).addEventListener(listen, (e) => {
                 e.preventDefault()
             })
@@ -25,18 +25,16 @@ class HelpersJs {
     visible = (element) => this.selectElement(element).style.display = 'block'
     invisible = (element) => this.selectElement(element).style.display = 'none'
 
-    requestXHR(format, data, method) {
-        
+    requestXHR(method, data = '', format = 'json') {
+
         let xhr = new XMLHttpRequest()
         let form_data = new FormData()
-
-        if(method == 'POST'){
-
+        
+        if (method == 'POST') {
             switch (format) {
                 case 'json':
                     data = this.stringJSON(data)
-                    break
-    
+                break
                 case 'querystring':
                     let query_string = []
                     for (let i in data) {
@@ -47,18 +45,19 @@ class HelpersJs {
                     data = query_string.join('&')
                     break
             }
-    
+
             form_data.append('data', data)
-    
+
             xhr.open('POST', this.url)
             xhr.send(form_data)
         }
 
         if(method == 'GET'){
-            this.readyState(xhr, () => {
-                return xhr.response
-            })
+
+            xhr.open('GET', this.url)
+            xhr.send()
         }
+
 
         return xhr
     }
@@ -80,3 +79,5 @@ class HelpersJs {
         })
     }
 }
+
+let helper = new HelpersJs('/')

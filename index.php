@@ -18,7 +18,7 @@
     .background{
         background-color:red;
         width:200px;
-        height:200px;
+        height:0;
     }
 </style>
 
@@ -36,10 +36,12 @@
         }
     })
 
-    //invisible element
-    helper.listener('click', '.click_element', () => {
-        let element = helper.toggleElement(".background", true)
-        console.log(element)
+    helper.listener('mouseover', '.click_element', () => {
+        helper.downWindow(".background", 100, true)
+    })
+
+    helper.listener('mouseout', '.click_element', () => {
+        helper.upWindow(".background", true)
     })
 
     let id_element = helper.getById("click-element")

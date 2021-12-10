@@ -9,10 +9,10 @@ class HelpersJs {
     getById = (idElement) => document.getElementById(idElement)
 
     toggleElement = (element, opacity=false) => {
+        let toggle_element = this.selectElement(element)
 
         if(!opacity){
             
-            let toggle_element = this.selectElement(element)
             if(toggle_element.style.display == "none"){
                 toggle_element.style.display = "block"
             }else{
@@ -23,17 +23,39 @@ class HelpersJs {
 
         }else{
 
-            let toggle_element = this.selectElement(element)
             if(toggle_element.style.opacity == "0"){
-                this.selectElement(element).style.opacity = "1"
-                this.selectElement(element).style.transition = "opacity 1s"
+                toggle_element.style.opacity = "1"
+                toggle_element.style.transition = "opacity 1s"
             }else{
-                this.selectElement(element).style.opacity = "0"
-                this.selectElement(element).style.transition = "opacity 1s"
+                toggle_element.style.opacity = "0"
+                toggle_element.style.transition = "opacity 1s"
             }
 
             return toggle_element
         }
+    }
+
+    downWindow = (element, height, transition=false) => {
+
+        if(!transition){
+            this.selectElement(element).style.height = `${height}px`
+        }else{
+            this.selectElement(element).style.height = `${height}px`
+            this.selectElement(element).style.transition = "1s"
+        }
+
+        return this.selectElement(element)
+    }
+
+    upWindow = (element, transition=false) => {
+
+        if(!transition){
+            this.selectElement(element).style.height = "0px"
+        }else{
+            this.selectElement(element).style.height = "0px"
+            this.selectElement(element).style.transition = "1s"
+        }
+        return this.selectElement(element)
     }
 
     listener = (listen, element, functionName) => {

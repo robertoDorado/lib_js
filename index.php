@@ -38,7 +38,8 @@
 
     //invisible element
     helper.listener('click', '.click_element', () => {
-        helper.toggleElement(".background")
+        let element = helper.toggleElement(".background", true)
+        console.log(element)
     })
 
     let id_element = helper.getById("click-element")

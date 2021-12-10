@@ -8,12 +8,31 @@ class HelpersJs {
     selectElements = (elems) => document.querySelectorAll(elems)
     getById = (idElement) => document.getElementById(idElement)
 
-    toggleElement = (element) => {
-        let toggle_element = this.selectElement(element)
-        if(toggle_element.style.display == "none"){
-            return toggle_element.style.display = "block"
+    toggleElement = (element, opacity=false) => {
+
+        if(!opacity){
+            
+            let toggle_element = this.selectElement(element)
+            if(toggle_element.style.display == "none"){
+                toggle_element.style.display = "block"
+            }else{
+                toggle_element.style.display = "none"
+            }
+
+            return toggle_element
+
         }else{
-            return toggle_element.style.display = "none"
+
+            let toggle_element = this.selectElement(element)
+            if(toggle_element.style.opacity == "0"){
+                this.selectElement(element).style.opacity = "1"
+                this.selectElement(element).style.transition = "opacity 1s"
+            }else{
+                this.selectElement(element).style.opacity = "0"
+                this.selectElement(element).style.transition = "opacity 1s"
+            }
+
+            return toggle_element
         }
     }
 

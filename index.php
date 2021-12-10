@@ -25,15 +25,20 @@
 <script src="./index.js<?= $remove_cache ?>"></script>
 <script>
     // fazer requisições get e post
-    let xhr = helper.requestXHR('GET', './receber.php', {idade:4444, velocidade:'13kmh'})
+    let xhr = helper.requestXHR('POST', './receber.php', {idade:4444, velocidade:'13kmh', nome: 'roberto'})
     helper.readyState(xhr, () => {
-        if(xhr.readyState == 4 && xhr.status == 200)
+        if(xhr.readyState == 4 && xhr.status == 200){
             console.log(xhr.response)
+        }
+
+        if(xhr.status != 200 && xhr.readyState != 4){
+            console.log(xhr.response)
+        }
     })
 
     //invisible element
     helper.listener('click', '.click_element', () => {
-        helper.invisible('.click_element')
+        helper.toggleElement(".background")
     })
 
     let id_element = helper.getById("click-element")

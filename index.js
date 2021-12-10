@@ -8,7 +8,14 @@ class HelpersJs {
     selectElements = (elems) => document.querySelectorAll(elems)
     getById = (idElement) => document.getElementById(idElement)
 
-    toggleElement = (element) =>
+    toggleElement = (element) => {
+        let toggle_element = this.selectElement(element)
+        if(toggle_element.style.display == "none"){
+            return toggle_element.style.display = "block"
+        }else{
+            return toggle_element.style.display = "none"
+        }
+    }
 
     listener = (listen, element, functionName) => {
         //Se o listener for submit ele previne a ação padrão

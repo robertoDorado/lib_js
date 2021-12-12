@@ -1,6 +1,6 @@
 class HelpersJs {
 
-    constructor(url = '') {
+    constructor(url) {
         this.url = url
     }
 
@@ -115,6 +115,7 @@ class HelpersJs {
         return xhr
     }
 
+    redirect = (url=this.url) => window.location.href = url
 
     popup(elem, altura, largura) {
 

@@ -201,21 +201,32 @@ class HelpersJs {
         })
     }
 
-    async fetchRequest(url = this.url, method = "GET", data="") {
+    async fetchRequest(url = this.url, method = "GET", data = "", type='json') {
 
-        if(method == "GET" && data != ""){
+        if (method == "GET" && data != "") {
             throw new Error("Método GET não pode enviar dados")
         }
 
-        if(url == ""){
+        if (url == "") {
             throw new Error("Obrigatório indicar uma url")
         }
 
-        if(method == "POST" && data == ""){
+        if (method == "POST" && data == "") {
             throw new Error("Obrigatório indicar dados para o método POST")
         }
 
-        if (method == "POST") {
+        if (method == "POST" && type == 'object') {
+            let form_data = new FormData()
+            form_data.append('data', this.stringJSON(data))
+
+            return await fetch(url, {
+                method: "POST",
+                body: form_data
+            })
+            .then((data) => data.json())
+        }
+
+        if (method == "POST" && type == 'json') {
             let form_data = new FormData()
             form_data.append('data', this.stringJSON(data))
 
@@ -224,11 +235,14 @@ class HelpersJs {
                 body: form_data
             })
             .then((data) => data.text())
-            .then(data => data)
         }
 
-        if (method == "GET") {
+        if (method == "GET" && type == 'object') {
             return await fetch(url).then((data) => data.json())
+        }
+
+        if (method == "GET" && type == 'json') {
+            return await fetch(url).then((data) => data.text())
         }
     }
 }

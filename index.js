@@ -83,7 +83,19 @@ class HelpersJs {
 
     getAttr = (elementId, attribute) => this.getById(elementId).getAttribute(attribute)
 
-    requestXHR(method, url=this.url, data = '', format = 'json') {
+    requestXHR(url=this.url, method="GET", data = '', format = 'json') {
+
+        if(method == "GET" && data != ""){
+            throw new Error("Método GET não pode enviar dados")
+        }
+
+        if(url == ""){
+            throw new Error("Obrigatório indicar uma url")
+        }
+
+        if(method == "POST" && data == ""){
+            throw new Error("Obrigatório indicar dados para o método POST")
+        }
 
         let xhr = new XMLHttpRequest()
         let form_data = new FormData()
@@ -157,6 +169,27 @@ class HelpersJs {
 
         return mask
     }
+
+    dataJson = (arrayElements, choise='object') => {
+        let data = {}
+        arrayElements.forEach((items) => {
+            if (items.dataset.send) {
+                let id_element = items.getAttribute('id')
+
+                switch(id_element){
+                    case id_element:
+                        data[id_element] = items.value
+                    break
+                }
+            }
+        })
+
+        if(choise == 'json'){
+            return this.stringJSON(data)
+        }
+
+        return data
+    }
     
     onlyNumber = (arrayElements) => {
         let mask = this.maskNumber()
@@ -166,6 +199,37 @@ class HelpersJs {
                 e.target.value = mask[field](e.target.value)
             })
         })
+    }
+
+    async fetchRequest(url = this.url, method = "GET", data="") {
+
+        if(method == "GET" && data != ""){
+            throw new Error("Método GET não pode enviar dados")
+        }
+
+        if(url == ""){
+            throw new Error("Obrigatório indicar uma url")
+        }
+
+        if(method == "POST" && data == ""){
+            throw new Error("Obrigatório indicar dados para o método POST")
+        }
+
+        if (method == "POST") {
+            let form_data = new FormData()
+            form_data.append('data', this.stringJSON(data))
+
+            return await fetch(url, {
+                method: "POST",
+                body: form_data
+            })
+            .then((data) => data.text())
+            .then(data => data)
+        }
+
+        if (method == "GET") {
+            return await fetch(url).then((data) => data.json())
+        }
     }
 }
 

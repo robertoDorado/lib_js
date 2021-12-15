@@ -1,50 +1,36 @@
 <?php $remove_cache = "?" . date("YmdHis"); ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <button class="click_element" id="click-element" data="data-target">click</button>
     <div class="background"></div>
-    
+
 </body>
+
 </html>
 
 <style>
-    .background{
-        background-color:red;
-        width:200px;
-        height:0;
+    .background {
+        background-color: red;
+        width: 200px;
+        height: 0;
     }
 </style>
 
 <script src="./index.js<?= $remove_cache ?>"></script>
 <script>
-    // fazer requisições get e post
-    let xhr = helper.requestXHR('POST', './receber.php', {idade:4444, velocidade:'13kmh', nome: 'roberto'})
-    helper.readyState(xhr, () => {
-        if(xhr.readyState == 4 && xhr.status == 200){
-            console.log(xhr.response)
-        }
-
-        if(xhr.status != 200 && xhr.readyState != 4){
-            console.log(xhr.response)
-        }
-    })
-
-    helper.listener('mouseover', '.click_element', () => {
-        helper.downWindow(".background", 100, true)
-    })
-
-    helper.listener('mouseout', '.click_element', () => {
-        helper.upWindow(".background", true)
-    })
-
-    let id_element = helper.getById("click-element")
-    let attribute_element = helper.getAttr("click-element", "data")
-    console.log(attribute_element)
+    let data = {
+        carro: "velho",
+        cor:"vermelha"
+    }
+    let response = helper.fetchRequest("./receber.php", "POST", data)
+    response.then(data => console.log(data))
 </script>

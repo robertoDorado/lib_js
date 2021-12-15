@@ -5,7 +5,9 @@ class HelpersJs {
     }
 
     selectElement = (elem) => document.querySelector(elem)
+
     selectElements = (elems) => document.querySelectorAll(elems)
+
     getById = (idElement) => document.getElementById(idElement)
 
     toggleElement = (element, opacity=false) => {
@@ -70,10 +72,13 @@ class HelpersJs {
     }
 
     readyState = (xhr, functionName) => xhr.addEventListener('readystatechange', functionName)
+
     parseJSON = (string) => JSON.parse(string)
+
     stringJSON = (object) => JSON.stringify(object)
 
     visible = (element) => this.selectElement(element).style.display = 'block'
+
     invisible = (element) => this.selectElement(element).style.display = 'none'
 
     getAttr = (elementId, attribute) => this.getById(elementId).getAttribute(attribute)
@@ -130,6 +135,36 @@ class HelpersJs {
             let meio1 = meio_h - altura2;
             let meio2 = meio_w - largura2;
             return window.open(this.url, '', `scrollbars=no,toolbar=no,location=no,directories=no,status=no,menubar=no,resizable=no,copyhistory=no,height=${altura},width=${largura},top=${meio1},left=${meio2}`)
+        })
+    }
+
+    noPaste = (arrayElements) => {
+        arrayElements.forEach((items) => {
+            let id_element = items.getAttribute('id')
+            this.listen('paste', `#${id_element}`, (e) => {
+                e.preventDefault()
+            })
+        })
+    }
+
+    maskNumber = () => {
+        let mask = {
+            number(value){
+                return value
+                .replace(/\D/g, '')
+            }
+        }
+
+        return mask
+    }
+    
+    onlyNumber = (arrayElements) => {
+        let mask = this.maskNumber()
+        arrayElements.forEach((items) => {
+            let field = items.dataset.num
+            items.addEventListener('input', (e) => {
+                e.target.value = mask[field](e.target.value)
+            })
         })
     }
 }

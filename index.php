@@ -27,6 +27,6 @@
 
 <script src="./index.js<?= $remove_cache ?>"></script>
 <script>
-    let response = helper.fetchRequest("./receber.php", "POST", {carro:"vermelho", marca:"ferrari"}, 'object')
+    let response = helper.fetchRequest("./receber.php", "POST", {nome:'fernando', carro:"wolks", cor:"vermelho"}, 'object')
     response.then(data => console.log(data))
 </script>

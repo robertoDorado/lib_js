@@ -132,6 +132,30 @@ class HelpersJs {
         return xhr
     }
 
+    validatePassword = (selectorMessage, inputSelector) => {
+        this.listener('input', inputSelector, (e) => {
+            let input_value = e.target.value
+
+            if(input_value.search(/([A-Za-z]+)/) == -1){
+                this.selectElement(selectorMessage).innerHTML = 'a senha não pode conter somente números'
+            }else if(input_value.search(/([0-9]+)/) == -1){
+                this.selectElement(selectorMessage).innerHTML = 'a senha não pode conter somente letras'
+            }else if(input_value.search(/([\.\-\_\@\?\/\#\$\%\&\*\(\)\!]+)/) == -1){
+                this.selectElement(selectorMessage).innerHTML = 'precisa de um caracter especial'
+            }else{
+                this.selectElement(selectorMessage).innerHTML = 'senha forte'
+            }
+    
+            if(input_value == ''){
+                this.selectElement(selectorMessage).innerHTML = ''
+            }
+
+            if(input_value.search(/([\.\-\_\@\?\/\#\$\%\&\*\(\)\!]+)/) == 0 && input_value.search(/([A-Za-z]+)/) == -1){
+                this.selectElement(selectorMessage).innerHTML = 'a senha não pode começar com um caracter especial'
+            }
+        })
+    } 
+
     redirect = (url=this.url) => window.location.href = url
 
     popup(elem, altura, largura) {

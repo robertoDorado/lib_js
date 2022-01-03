@@ -13,6 +13,9 @@
     <button class="click_element" id="click-element" data="data-target">click</button>
     <div class="background"></div>
 
+    <input type="text" name="write" id="write" class="write"><br>
+    <p class="strong_password"></p>
+
 </body>
 
 </html>
@@ -29,4 +32,6 @@
 <script>
     let response = helper.fetchRequest("./receber.php", "POST", {nome:'fernando', carro:"wolks", cor:"vermelho"}, 'object')
     response.then(data => console.log(data))
+
+    helper.validatePassword('.strong_password', '#write')
 </script>

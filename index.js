@@ -132,6 +132,47 @@ class HelpersJs {
         return xhr
     }
 
+    maskMoney = (selector) => {
+        let mask = {
+            real(value){
+                return value
+                .replace(/\D/g, '')
+                .replace(/(\d)(\d{2})/, 'R$ $1,$2')
+                .replace(/(\d),(\d)(\d{2})/, '$1$2,$3')
+                .replace(/(\d)(\d),(\d)(\d{2})/, '$1$2$3,$4')
+                .replace(/(\d)(\d)(\d),(\d)(\d{2})/, '$1.$2$3$4,$5')
+                .replace(/(\d)\.(\d)(\d)(\d),(\d)(\d{2})/, '$1$2.$3$4$5,$6')
+                .replace(/(\d)(\d)\.(\d)(\d)(\d),(\d)(\d{2})/, '$1$2$3.$4$5$6,$7')
+                .replace(/(\d)(\d)(\d)\.(\d)(\d)(\d),(\d)(\d{2})/, '$1.$2$3$4.$5$6$7,$8')
+                .replace(/(\d)\.(\d)(\d)(\d)\.(\d)(\d)(\d),(\d)(\d{2})/, '$1$2.$3$4$5.$6$7$8,$9')
+                .replace(/(\d)(\d)\.(\d)(\d)(\d)\.(\d)(\d)(\d),(\d)(\d{2})/, '$1$2$3.$4$5$6.$7$8$9,$10')
+                .replace(/(\d)(\d)(\d)\.(\d)(\d)(\d)\.(\d)(\d)(\d),(\d)(\d{2})/, '$1.$2$3$4.$5$6$7.$8$9$10,$11')
+                .replace(/(,\d{2})(\d+?$)/, '$1')
+            },
+
+            usa(value){
+                return value
+                .replace(/\D/g, '')
+                .replace(/(\d)(\d{2})/, '$ $1.$2')
+                .replace(/(\d)\.(\d)(\d{2})/, '$1$2.$3')
+                .replace(/(\d)(\d)\.(\d)(\d{2})/, '$1$2$3.$4')
+                .replace(/(\d)(\d)(\d)\.(\d)(\d{2})/, '$1,$2$3$4.$5')
+                .replace(/(\d),(\d)(\d)(\d)\.(\d)(\d{2})/, '$1$2,$3$4$5.$6')
+                .replace(/(\d)(\d),(\d)(\d)(\d)\.(\d)(\d{2})/, '$1$2$3,$4$5$6.$7')
+                .replace(/(\d)(\d)(\d),(\d)(\d)(\d)\.(\d)(\d{2})/, '$1,$2$3$4,$5$6$7.$8')
+                .replace(/(\d),(\d)(\d)(\d),(\d)(\d)(\d)\.(\d)(\d{2})/, '$1$2,$3$4$5,$6$7$8.$9')
+                .replace(/(\d)(\d),(\d)(\d)(\d),(\d)(\d)(\d)\.(\d)(\d{2})/, '$1$2$3,$4$5$6,$7$8$9.$10')
+                .replace(/(\d)(\d)(\d),(\d)(\d)(\d),(\d)(\d)(\d)\.(\d)(\d{2})/, '$1,$2$3$4,$5$6$7,$8$9$10.$11')
+                .replace(/(\.\d{2})(\d+?$)/, '$1')
+            }
+        }
+        
+        this.listener('input', selector, (e) => {
+            let field = e.target.dataset.convert
+            e.target.value = mask[field](e.target.value)
+        })
+    }
+
     validatePassword = (selectorMessage, inputSelector) => {
         this.listener('input', inputSelector, (e) => {
             let input_value = e.target.value

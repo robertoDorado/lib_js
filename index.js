@@ -153,7 +153,7 @@ class HelpersJs {
             usa(value){
                 return value
                 .replace(/\D/g, '')
-                .replace(/(\d)(\d{2})/, '$ $1.$2')
+                .replace(/(\d)(\d{2})/, 'US$ $1.$2')
                 .replace(/(\d)\.(\d)(\d{2})/, '$1$2.$3')
                 .replace(/(\d)(\d)\.(\d)(\d{2})/, '$1$2$3.$4')
                 .replace(/(\d)(\d)(\d)\.(\d)(\d{2})/, '$1,$2$3$4.$5')
